@@ -1,0 +1,36 @@
+label select {
+  width: 200px;
+  font-weight: 500;
+  padding: 10px;
+  border: 1px solid #eee;
+  outline: none;
+  font-size: 14px;
+  border-radius: 5px;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+label.appinput i {
+  position: absolute;
+  z-index: 10;
+}
+.inputIcon {
+  position: absolute;
+  right: 10px;
+  z-index: 10;
+  bottom: 15px;
+  cursor: pointer !important;
+}
+.appinput > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.appinput > div small {
+  font-size: 11px;
+  color: #e0e0e0;
+  margin-left: 10px;
+}
+.appinput input:disabled {
+  background-color: #f5f5f5;
+  color: #777;
+}

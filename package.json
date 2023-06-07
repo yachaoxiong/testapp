@@ -1,0 +1,28 @@
+{
+  "name": "just wheels App",
+  "version": "1.0.0",
+  "main": "web/index.js",
+  "license": "UNLICENSED",
+  "scripts": {
+    "shopify": "shopify",
+    "build": "shopify app build",
+    "dev": "shopify app dev",
+    "info": "shopify app info",
+    "generate": "shopify app generate",
+    "deploy": "shopify app deploy"
+  },
+  "dependencies": {
+    "@shopify/app": "3.46.2",
+    "@shopify/cli": "3.46.2",
+    "dotenv": "^16.1.4",
+    "express-async-handler": "^1.2.0",
+    "superagent": "^8.0.9"
+  },
+  "author": "Eric",
+  "private": true,
+  "workspaces": [
+    "web",
+    "web/frontend",
+    "extensions/*"
+  ]
+}
