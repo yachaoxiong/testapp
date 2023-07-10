@@ -1,0 +1,324 @@
+html,
+body {
+  font-family: Arial, sans-serif;
+  background-color: #eaeaeab6;
+  min-height: 90vh;
+  margin: 0;
+}
+.hero {
+  background-color: #000000b6;
+  min-height: 36vh;
+  background-image: url('HomeBackground.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: overlay;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+.tagline {
+  padding-top: 200px;
+  margin: 0;
+  text-align: center;
+  color: #ebebeb;
+}
+.custom-select {
+  position: relative;
+  display: inline-block;
+  padding: 0; /* Remove padding */
+  box-sizing: border-box; /* Add box-sizing */
+}
+
+.selected-option {
+  cursor: pointer;
+  border: 3px solid #f8f8f8;
+  background-color: #fff;
+  box-sizing: border-box; /* Add box-sizing */
+  padding: 17px 20px;
+  border-radius: 5px;
+  min-width: 260px;
+}
+.selected-option:hover {
+  border: 3px solid #4672fe;
+}
+
+.options {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  z-index: 1;
+  max-height: 200px; /* Adjust this value according to your preference */
+  overflow-y: auto; /* Enables vertical scrolling */
+}
+
+.option {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.option:hover {
+  background-color: #efefef;
+}
+
+/* Search Container styles */
+.search-container {
+  padding: 90px;
+  display: flex;
+  gap: 20px;
+  background: #fbfbfb;
+  transform: translateY(100px);
+  box-shadow: 0 2px 8px 0px #80808038;
+  border-radius: 6px;
+  z-index: 1;
+}
+
+.search-container select {
+  padding: 18px 32px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #bebebe;
+  font-size: 14px;
+}
+
+.search-btn {
+  padding: 18px 32px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4672fe;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+  background-color: #305dd6;
+}
+/* End of Search Container styles */
+
+/* footer */
+.footer-text {
+  padding-top: 100px;
+  width: 100%;
+  color: rgb(123, 123, 123);
+  text-align: center;
+}
+.footer-text a {
+  text-decoration: none;
+  color: rgb(28, 90, 205);
+}
+
+@keyframes move {
+  0% {
+    transform: translate(-30px, -30px);
+  }
+
+  25% {
+    transform: translate(30px, -30px);
+  }
+
+  50% {
+    transform: translate(30px, 30px);
+  }
+
+  75% {
+    transform: translate(-30px, 30px);
+  }
+
+  100% {
+    transform: translate(-30px, -30px);
+  }
+}
+.cardContainer {
+  display: flex;
+  padding-top: 160px;
+  gap: 68px;
+  padding: 160px 60px 0px 60px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.factory-card {
+  background: #4672fe !important;
+}
+.factory-card h1 {
+  color: #fff !important;
+}
+.factory-card h1 span {
+  color: #011555 !important;
+}
+.tire-card {
+  position: relative;
+  background: #f3f3f3;
+  padding: 10px 36px 27px 38px;
+  border-radius: 10px;
+  border: 2px solid #00196900;
+  cursor: pointer;
+}
+.tire-card:hover {
+  border: 2px solid #001869;
+}
+.tire-card h1 {
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+}
+.tire-card h1 span {
+  font-size: 26px;
+  border-left: 3px dashed grey;
+  padding-left: 10px;
+  color: #4672fe;
+}
+.tire-card .cardTag {
+  position: absolute;
+  top: -8px;
+  right: 21px;
+  font-size: 12px;
+  background: red;
+  color: white;
+  padding: 2px 9px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.tire-card-wrapper {
+  max-width: 1028px;
+  width: 100%;
+  display: flex;
+}
+.selectedModificationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 60px 0px 60px;
+}
+.selectedModification {
+  max-width: 1028px;
+  display: flex;
+  width: 100%;
+}
+.selected-modification-card {
+  margin-top: 180px;
+  background: #4672fe;
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 10px;
+  position: relative;
+}
+.selected-modification-card .tagLeft {
+  position: absolute;
+  top: -18px;
+  left: 21px;
+  font-size: 12px;
+  background: red;
+  color: white;
+  padding: 2px 9px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.selected-modification-card .tagRight {
+  position: absolute;
+  top: -18px;
+  right: 21px;
+  font-size: 12px;
+  background: red;
+  color: white;
+  padding: 2px 9px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.tireDetailsList {
+  padding-top: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.tireDetailsContainer {
+  max-width: 1268px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.product-rate {
+  position: absolute;
+  display: none;
+  top: 2px;
+  right: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 0 4px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: rebeccapurple;
+  color: white !important;
+  border-radius: 16px 0px 0px 16px;
+}
+.show-rate {
+  display: block;
+}
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  padding: 2rem;
+  width: 300px;
+  background: #ffffff;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  transition: box-shadow 0.25s ease-in-out;
+}
+
+.product-card:hover {
+  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+}
+.product-card .logoImg {
+  width: 50%;
+  height: auto;
+}
+.product-card .productImg {
+  width: 100%;
+  height: auto;
+}
+
+.product-card h3 {
+  margin: 1rem 0;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.product-card p {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.875rem;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  margin: 0.25rem 0;
+}
+
+.tag {
+  display: inline-block;
+  color: #ffffff;
+  background-color: #3f51b5;
+  padding: 2px 8px;
+  margin: 2px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+/* media query medium screen*/
+@media (max-width: 1024px) {
+  .search-container {
+    padding: 60px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

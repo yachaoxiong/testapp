@@ -1,10 +1,9 @@
-import asyncHandler from 'express-async-handler';
-import superagent from 'superagent';
+import asyncHandler from 'express-async-handler'
+import superagent from 'superagent'
 
 // @route get /api/v2/makes
 // @desc get all makes
 // @access Public
-
 
 const getMakes = asyncHandler(async (req, res) => {
   const baseURL =
@@ -14,6 +13,7 @@ const getMakes = asyncHandler(async (req, res) => {
   const response = await superagent.get(baseURL)
   // get the data
   // throw error if no data
+
   if (!response.body.data) {
     // set status code to 404
     res.status(404)
@@ -86,7 +86,6 @@ const getYearsByMakeAndModel = asyncHandler(async (req, res) => {
     process.env.BASE_URL +
     `/years/?make=${make}&model=${model}&user_key=` +
     process.env.USER_KEY
-
 
   const response = await superagent.get(baseURL)
 
@@ -271,7 +270,6 @@ const tireSearchWithoutGeneration = asyncHandler(async (req, res) => {
   })
 })
 
-
 export default {
   getMakes,
   getModels,
@@ -283,4 +281,4 @@ export default {
   searchByModels,
   tireSearch,
   tireSearchWithoutGeneration,
-};
+}

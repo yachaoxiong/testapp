@@ -1,0 +1,320 @@
+html,
+body {
+  font-family: Arial, sans-serif;
+  background-color: #000000b6 !important;
+  margin: 0;
+  min-height: 100vh;
+  background-image: url('../assets/HomeBackground.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: overlay;
+}
+
+a {
+  color: #00b7ff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Header styles */
+.gradientText {
+  font-size: 66px;
+  font-weight: bold;
+  background-image: linear-gradient(
+    to right,
+    #1e90ff,
+    #00bfff,
+    #87cefa,
+    #1e90ff
+  );
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.tagLine {
+  padding-top: 60px;
+  margin: 0;
+  text-align: center;
+  color: #ebebeb;
+  font-size: 30px;
+  font-weight: 600;
+}
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+  background: rgba(21, 21, 29, 0.8);
+  padding: 16px 93px 66px 93px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+.mainContainer {
+  padding-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+/* Header styles */
+
+/* Form styles */
+
+.uploadContainer {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+.uploadForm {
+  display: flex;
+  gap: 38px;
+  flex-direction: column;
+}
+.dragover {
+  transform: scale(1.06) !important;
+  transition: all 0.3s ease;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+.uploadText {
+  color: #fdfdfd;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.uploadText.default {
+  color: #333;
+}
+
+.uploadText.warning {
+  color: #dc3545;
+}
+
+.uploadText.success {
+  color: #007bff;
+}
+
+.uploadIcon {
+  color: #4672fe;
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.fileInfo {
+  position: absolute;
+  bottom: 15px;
+  color: #007bff;
+  font-size: 14px;
+  font-weight: bold;
+  animation: fadeIn 0.5s;
+}
+
+.fileWarning {
+  color: #dc3545;
+}
+.uploadLabel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 72px;
+  border: 2px dashed #f7f7f714;
+  border-radius: 5px;
+  background-color: #00000045;
+  width: 280px;
+  height: 120px;
+  transition: background-color 0.3s, transform 0.3s;
+  animation: fadeIn 1s;
+  cursor: pointer;
+}
+button[type='submit'] {
+  margin-top: 20px;
+  background-image: linear-gradient(135deg, #3f64da, #002ec0);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s;
+  animation: fadeIn 1s;
+  padding: 16px 36px;
+  width: 100%;
+  font-size: 16px;
+}
+
+button[type='submit']:hover {
+  box-shadow: 0px 4px 18px 0px #05227a54;
+}
+.cancelBtn {
+  font-size: 16px;
+  margin-top: 20px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s;
+  animation: fadeIn 1s;
+  padding: 19px 18px;
+  width: 100%;
+  text-align: center;
+  background-image: linear-gradient(135deg, #747474, #484848);
+}
+.cancelBtn:hover {
+  box-shadow: 0px 4px 18px 0px #1f1f1f54;
+}
+/* Form styles */
+
+/* task buttons styles */
+.processBtn {
+  margin-top: 20px;
+  padding: 30px 36px;
+  background-color: #373737;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s;
+  animation: fadeIn 1s;
+  opacity: 0.8;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+.processBtn i {
+  font-size: 60px;
+}
+.processBtn:hover {
+  background-color: #4672fe;
+  transform: translateY(-10px);
+}
+.taskButtonsGroup {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+.taskButtonText {
+  display: flex;
+  gap: 10px;
+  color: #595959;
+  padding: 32px 20px;
+  border-radius: 5px;
+}
+.successInfo {
+  display: flex;
+  gap: 10px;
+  color: #d2d2d2;
+  background: #3a3a3a;
+  padding: 16px;
+  border-left: 5px solid #009688;
+  border-radius: 5px;
+}
+.warningInfo {
+  margin-top: 20px;
+  gap: 10px;
+  color: #d2d2d2;
+  background: #3a3a3a;
+  padding: 16px;
+  border-left: 5px solid #960043;
+  border-radius: 5px;
+}
+
+.uploadBtnContainer {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+/* task buttons styles */
+
+/* Tab styles */
+.tabContainer {
+  margin-top: 20px;
+  min-width: 560px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 56px;
+}
+
+/* Tab styles */
+/* footer */
+.footerText {
+  padding-top: 50px;
+  width: 100%;
+  color: rgb(123, 123, 123);
+  text-align: center;
+}
+.footerText a {
+  text-decoration: none;
+  color: rgb(28, 90, 205);
+}
+
+@keyframes move {
+  0% {
+    transform: translate(-30px, -30px);
+  }
+
+  25% {
+    transform: translate(30px, -30px);
+  }
+
+  50% {
+    transform: translate(30px, 30px);
+  }
+
+  75% {
+    transform: translate(-30px, 30px);
+  }
+
+  100% {
+    transform: translate(-30px, -30px);
+  }
+}
+
+/* For tablets */
+@media (max-width: 768px) {
+  .gradientText {
+    font-size: 36px;
+  }
+  .mainContent {
+    padding: 10px 30px 30px 30px;
+  }
+  .uploadContainer {
+    flex-direction: column;
+  }
+  .uploadLabel {
+    width: 200px;
+    height: 80px;
+  }
+  .tabContainer {
+    min-width: auto;
+  }
+}
+
+/* For mobile phones */
+@media (max-width: 480px) {
+  .gradientText {
+    font-size: 24px;
+  }
+  .mainContent {
+    padding: 5px 20px 20px 20px;
+  }
+  .upload-label {
+    width: 150px;
+    height: 60px;
+  }
+  .tab-btn i {
+    font-size: 24px;
+  }
+}

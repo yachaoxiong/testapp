@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useAppQuery, useAuthenticatedFetch } from "../hooks";
+import { useAppQuery, useAuthenticatedFetch } from '../hooks'
 
 export default function useMakeData() {
   const [makeData, setMakeData] = useState(null)
@@ -14,7 +14,7 @@ export default function useMakeData() {
           return {
             label: make.name,
             value: make.slug,
-            logo: make.logo
+            logo: make.logo,
           }
         })
         setMakeData([...initMakeOption, ...makes])

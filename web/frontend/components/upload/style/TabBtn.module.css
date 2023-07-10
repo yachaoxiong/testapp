@@ -1,0 +1,45 @@
+.tabButtons {
+  position: relative;
+  display: flex;
+  margin-bottom: 10px;
+  gap: 35px;
+  justify-content: center;
+
+  /* background: rgba(21, 21, 29, 0.8);
+  padding: 15px 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px); */
+}
+.tabBtn {
+  display: flex;
+  background-color: #00000000;
+  color: #6f6f6f;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 0 5px;
+  border-radius: 10px;
+  border: 1px solid #9e9e9e00;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -80px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+}
+.tabBtn i {
+  font-size: 36px;
+}
+.tabBtn:hover {
+  /* background-color: #4672fe; */
+  color: rgb(245, 245, 245);
+  /* box-shadow: 0px 12px 24px 0px #1547da; */
+  transform: scale(1.2);
+}
+.active {
+  background-color: #4672fe !important;
+  color: rgb(245, 245, 245);
+  box-shadow: 0px 12px 24px 0px #1547da;
+  transform: scale(1.1);
+}

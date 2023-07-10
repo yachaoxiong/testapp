@@ -1,0 +1,68 @@
+{{'app-style.css' | asset_url | stylesheet_tag}}
+
+{% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> {% endcomment %}
+<div class="hero">
+  <h1 class="tagline">Just Wheels - Drive with Confidence</h1>
+  <div class="search-container">
+    <div class="custom-select" id="makeSelect">
+      <div class="selected-option" onclick="toggleDropdown('makeSelect')">
+        <span>Select Make</span>
+      </div>
+      <div class="options" id="makeOptions">
+        <!-- The options will be populated by JavaScript -->
+      </div>
+    </div>
+    <div class="custom-select" id="modelSelect">
+      <div class="selected-option" onclick="toggleDropdown('modelSelect')">
+        <span>Select Model</span>
+      </div>
+      <div class="options"></div>
+    </div>
+    <!-- Add appropriate onclick attributes for the other custom selects when you have the data -->
+    <div class="custom-select" id="yearSelect">
+      <div class="selected-option" onclick="toggleDropdown('yearSelect')">
+        <span>Select Year</span>
+      </div>
+      <div class="options"></div>
+    </div>
+
+    <div class="custom-select" id="modificationSelect">
+      <div
+        class="selected-option"
+        onclick="toggleDropdown('modificationSelect')"
+      >
+        <span>Select Modification</span>
+      </div>
+      <div class="options"></div>
+    </div>
+  </div>
+  <!-- End of Search Container -->
+</div>
+<div class="selectedModificationContainer">
+  <div id="selectedModification" class="selectedModification"></div>
+</div>
+<div class="cardContainer" id="cardContainer"></div>
+<div class="tireDetailsList">
+  <div class="tireDetailsContainer" id="tireDetailsContainer"></div>
+</div>
+
+<p class="footer-text">
+  Designed by
+  <a href="https://ecommercecanada.com/">ecommercecanada Eric</a>
+</p>
+
+{{'app-script.js' | asset_url | script_tag}}
+
+
+
+{% schema %}
+{
+  "name": "Wheels Filter",
+  "target": "section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "product", "autofill": true },
+    { "type": "color", "id": "colour", "label": "Star Colour", "default": "#ff0000" }
+  ]
+}
+{% endschema %}
+
