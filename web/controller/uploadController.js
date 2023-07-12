@@ -180,7 +180,7 @@ const processAccessoriesFiles = asyncHandler(async (req, res) => {
     '/home/sftpuser/wheel-pros/CommonFeed/CAD/ACCESSORIES/accessoriesInvPriceData.json'
   const remotePath2 =
     '/home/sftpuser/wheel-pros/TechFeed/ACCESSORIES/Accessory_TechGuide.json'
-  const outputPath = `/home/sftpuser/uploads/accessories-${dataString}.json`
+  const outputPath = `/home/sftpuser/uploads/accessories-${dataString}.csv`
 
   try {
     await sftp.connect(config)
@@ -262,7 +262,7 @@ const processWheelFiles = asyncHandler(async (req, res) => {
     '/home/sftpuser/wheel-pros/CommonFeed/CAD/WHEEL/wheelInvPriceData.json'
   const remotePath2 =
     '/home/sftpuser/wheel-pros/TechFeed/WHEEL/Wheel_TechGuide.json'
-  const outputPath = `/home/sftpuser/uploads/wheels-${dataString}.json`
+  const outputPath = `/home/sftpuser/uploads/wheels-${dataString}.csv`
 
   try {
     await sftp.connect(config)
@@ -599,7 +599,7 @@ const uploadAccessoriesFile = asyncHandler(async (req, res) => {
 
   const dataString = new Date().toISOString().replace(/:/g, '-')
   const sftp = new SFTPClient()
-  const outputPath = `/home/sftpuser/uploads/accessories-${dataString}.json`
+  const outputPath = `/home/sftpuser/uploads/accessories-${dataString}.csv`
 
   upload(req, res, async (err) => {
     if (err) {
@@ -700,7 +700,7 @@ const uploadWheelsFile = asyncHandler(async (req, res) => {
 
   const dataString = new Date().toISOString().replace(/:/g, '-')
   const sftp = new SFTPClient()
-  const outputPath = `/home/sftpuser/uploads/wheels-${dataString}.json`
+  const outputPath = `/home/sftpuser/uploads/wheels-${dataString}.csv`
 
   upload(req, res, async (err) => {
     if (err) {
