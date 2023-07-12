@@ -4,6 +4,7 @@ import { Readable } from 'stream'
 import multer from 'multer'
 import path from 'path'
 import csvtojson from 'csvtojson'
+import { Parser } from '@json2csv/plainjs'
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -47,7 +48,7 @@ const processFiles = asyncHandler(async (req, res) => {
     '/home/sftpuser/wheel-pros/CommonFeed/CAD/TIRE/tireInvPriceData.json'
   const remotePath2 =
     '/home/sftpuser/wheel-pros/TechFeed/TIRE/Tire_TechGuide.json'
-  const outputPath = `/home/sftpuser/uploads/tires-${dataString}.json`
+  const outputPath = `/home/sftpuser/uploads/tires-${dataString}.csv`
 
   try {
     await sftp.connect(config)
@@ -69,8 +70,10 @@ const processFiles = asyncHandler(async (req, res) => {
 
         return {
           Title: `${invPriceItem?.Brand}-${techItem?.display_model_no}-${techItem?.tire_size}`,
-          'Body HTML': techItem?.tire_description,
-          Vendor: invPriceItem?.Brand,
+          'Body HTML': techItem?.tire_description
+            ? techItem?.tire_description
+            : '',
+          Vendor: invPriceItem?.Brand ? invPriceItem?.Brand : '',
           Tags: `${invPriceItem?.Brand ? invPriceItem?.Brand + ',' : ''} ${
             techItem?.tire_diameter ? techItem?.tire_diameter + ',' : ''
           } ${techItem?.tire_size ? techItem?.tire_size + ',' : ''} Tire, ${
@@ -81,44 +84,50 @@ const processFiles = asyncHandler(async (req, res) => {
           Category:
             'Vehicles & Parts > Vehicle Parts & Accessories > Motor Vehicle Parts > Motor Vehicle Wheel Systems > Motor Vehicle Tires',
           // handle: techItem?.display_model_no,
-          'Image Src': techItem?.image_url,
-          'Variant Barcode': techItem?.upc,
-          'Variant SKU': techItem?.sku,
-          'Varian Weight': techItem?.weight,
+          'Image Src': techItem?.image_url ? techItem?.image_url : '',
+          'Variant Barcode': techItem?.upc ? techItem?.upc : '',
+          'Variant SKU': techItem?.sku ? techItem?.sku : '',
+          'Varian Weight': techItem?.weight ? techItem?.weight : '',
           'Varian Weight Unit': 'kg',
-          'Varian Country Of Origin': techData?.source_country,
-          'Variant Price': invPriceItem?.MSRP_CAD,
+          'Varian Country Of Origin': techItem?.source_country
+            ? techItem?.source_country
+            : '',
+          'Variant Price': invPriceItem?.MSRP_CAD ? invPriceItem?.MSRP_CAD : '',
           'Metafield: custom.load_index [single_line_text_field]':
-            techItem?.load_index,
+            techItem?.load_index ? techItem?.load_index : '',
           'Metafield: custom.speed_rating [single_line_text_field]':
-            techItem?.speed_rating,
+            techItem?.speed_rating ? techItem?.speed_rating : '',
           'Metafield: custom.treadwear [single_line_text_field]':
-            techItem?.treadwear,
+            techItem?.treadwear ? techItem?.treadwear : '',
           'Metafield: custom.traction [single_line_text_field]':
-            techItem?.traction,
+            techItem?.traction ? techItem?.traction : '',
           'Metafield: custom.temperature [single_line_text_field]':
-            techItem?.temperature,
+            techItem?.temperature ? techItem?.temperature : '',
           'Metafield: custom.section_width [single_line_text_field]':
-            techItem?.section_width,
-          'Metafield: custom.series [single_line_text_field]': techItem?.series,
+            techItem?.section_width ? techItem?.section_width : '',
+          'Metafield: custom.series [single_line_text_field]': techItem?.series
+            ? techItem?.series
+            : '',
           'Metafield: custom.rim_diameter [single_line_text_field]':
-            techItem?.rim_diameter,
+            techItem?.rim_diameter ? techItem?.rim_diameter : '',
           'Metafield: custom.tire_diameter_actual [single_line_text_field]':
-            techItem?.tire_diameter_actual,
+            techItem?.tire_diameter_actual
+              ? techItem?.tire_diameter_actual
+              : '',
           'Metafield: custom.min_width_in [single_line_text_field]':
-            techItem?.min_width_in,
+            techItem?.min_width_in ? techItem?.min_width_in : '',
           'Metafield: custom.max_width_in [single_line_text_field]':
-            techItem?.max_width_in,
+            techItem?.max_width_in ? techItem?.max_width_in : '',
           'Metafield: custom.max_load [single_line_text_field]':
-            techItem?.max_load,
+            techItem?.max_load ? techItem?.max_load : '',
           'Metafield: custom.division [single_line_text_field]':
-            techItem?.division,
+            techItem?.division ? techItem?.division : '',
           'Metafield: custom.display_model_no [single_line_text_field]':
-            techItem?.display_model_no,
+            techItem?.display_model_no ? techItem?.display_model_no : '',
           'Metafield: custom.tread_depth [single_line_text_field]':
-            techItem?.tread_depth,
+            techItem?.tread_depth ? techItem?.tread_depth : '',
           'Metafield: custom.max_pressure [single_line_text_field]':
-            techItem?.max_pressure,
+            techItem?.max_pressure ? techItem?.max_pressure : '',
           // VariantImage: techItem?.image_url,
           // Option1Value: techItem?.tire_size,
           // VariantBarcode: techItem?.upc,
@@ -132,13 +141,14 @@ const processFiles = asyncHandler(async (req, res) => {
     }
 
     const newData = generateNewData(file1Data, file2Data)
-    const newDataJson = JSON.stringify(newData)
-
-    const newDataBuffer = Buffer.from(newDataJson)
+    //convert it to json format to check the data length
+    // const newDataJson = JSON.stringify(newData)
+    const parser = new Parser()
+    const csv = parser.parse(newData)
+    const newDataBuffer = Buffer.from(csv)
     const newDataStream = new Readable()
     newDataStream.push(newDataBuffer)
     newDataStream.push(null)
-
     await sftp.put(newDataStream, outputPath)
 
     res.status(200).json({
@@ -211,9 +221,12 @@ const processAccessoriesFiles = asyncHandler(async (req, res) => {
     }
 
     const newData = generateNewData(file1Data, file2Data)
-    const newDataJson = JSON.stringify(newData)
+    // const newDataJson = JSON.stringify(newData)
 
-    const newDataBuffer = Buffer.from(newDataJson)
+    const parser = new Parser()
+    const csv = parser.parse(newData)
+
+    const newDataBuffer = Buffer.from(csv)
     const newDataStream = new Readable()
     newDataStream.push(newDataBuffer)
     newDataStream.push(null)
@@ -236,7 +249,6 @@ const processAccessoriesFiles = asyncHandler(async (req, res) => {
 })
 
 const processWheelFiles = asyncHandler(async (req, res) => {
-  console.log('processWheelFiles==>')
   const config = {
     host: process.env.AMAZON_HOST,
     port: '22',
@@ -388,9 +400,12 @@ const processWheelFiles = asyncHandler(async (req, res) => {
     }
 
     const newData = generateNewData(file1Data, file2Data)
-    const newDataJson = JSON.stringify(newData)
+    // const newDataJson = JSON.stringify(newData)
 
-    const newDataBuffer = Buffer.from(newDataJson)
+    const parser = new Parser()
+    const csv = parser.parse(newData)
+
+    const newDataBuffer = Buffer.from(csv)
     const newDataStream = new Readable()
     newDataStream.push(newDataBuffer)
     newDataStream.push(null)
@@ -423,7 +438,7 @@ const uploadTireFile = asyncHandler(async (req, res) => {
 
   const dataString = new Date().toISOString().replace(/:/g, '-')
   const sftp = new SFTPClient()
-  const outputPath = `/home/sftpuser/uploads/tires-${dataString}.json`
+  const outputPath = `/home/sftpuser/uploads/tires-${dataString}.csv`
 
   upload(req, res, async (err) => {
     if (err) {
@@ -469,8 +484,10 @@ const uploadTireFile = asyncHandler(async (req, res) => {
 
               return {
                 Title: `${invPriceItem?.Brand}-${techItem?.display_model_no}-${techItem?.tire_size}`,
-                'Body HTML': techItem?.tire_description,
-                Vendor: invPriceItem?.Brand,
+                'Body HTML': techItem?.tire_description
+                  ? techItem?.tire_description
+                  : '',
+                Vendor: invPriceItem?.Brand ? invPriceItem?.Brand : '',
                 Tags: `${
                   invPriceItem?.Brand ? invPriceItem?.Brand + ',' : ''
                 } ${
@@ -485,45 +502,51 @@ const uploadTireFile = asyncHandler(async (req, res) => {
                 Category:
                   'Vehicles & Parts > Vehicle Parts & Accessories > Motor Vehicle Parts > Motor Vehicle Wheel Systems > Motor Vehicle Tires',
                 // handle: techItem?.display_model_no,
-                'Image Src': techItem?.image_url,
-                'Variant Barcode': techItem?.upc,
-                'Variant SKU': techItem?.sku,
-                'Varian Weight': techItem?.weight,
+                'Image Src': techItem?.image_url ? techItem?.image_url : '',
+                'Variant Barcode': techItem?.upc ? techItem?.upc : '',
+                'Variant SKU': techItem?.sku ? techItem?.sku : '',
+                'Varian Weight': techItem?.weight ? techItem?.weight : '',
                 'Varian Weight Unit': 'kg',
-                'Varian Country Of Origin': techData?.source_country,
-                'Variant Price': invPriceItem?.MSRP_CAD,
+                'Varian Country Of Origin': techItem?.source_country
+                  ? techItem?.source_country
+                  : '',
+                'Variant Price': invPriceItem?.MSRP_CAD
+                  ? invPriceItem?.MSRP_CAD
+                  : '',
                 'Metafield: custom.load_index [single_line_text_field]':
-                  techItem?.load_index,
+                  techItem?.load_index ? techItem?.load_index : '',
                 'Metafield: custom.speed_rating [single_line_text_field]':
-                  techItem?.speed_rating,
+                  techItem?.speed_rating ? techItem?.speed_rating : '',
                 'Metafield: custom.treadwear [single_line_text_field]':
-                  techItem?.treadwear,
+                  techItem?.treadwear ? techItem?.treadwear : '',
                 'Metafield: custom.traction [single_line_text_field]':
-                  techItem?.traction,
+                  techItem?.traction ? techItem?.traction : '',
                 'Metafield: custom.temperature [single_line_text_field]':
-                  techItem?.temperature,
+                  techItem?.temperature ? techItem?.temperature : '',
                 'Metafield: custom.section_width [single_line_text_field]':
-                  techItem?.section_width,
+                  techItem?.section_width ? techItem?.section_width : '',
                 'Metafield: custom.series [single_line_text_field]':
-                  techItem?.series,
+                  techItem?.series ? techItem?.series : '',
                 'Metafield: custom.rim_diameter [single_line_text_field]':
-                  techItem?.rim_diameter,
+                  techItem?.rim_diameter ? techItem?.rim_diameter : '',
                 'Metafield: custom.tire_diameter_actual [single_line_text_field]':
-                  techItem?.tire_diameter_actual,
+                  techItem?.tire_diameter_actual
+                    ? techItem?.tire_diameter_actual
+                    : '',
                 'Metafield: custom.min_width_in [single_line_text_field]':
-                  techItem?.min_width_in,
+                  techItem?.min_width_in ? techItem?.min_width_in : '',
                 'Metafield: custom.max_width_in [single_line_text_field]':
-                  techItem?.max_width_in,
+                  techItem?.max_width_in ? techItem?.max_width_in : '',
                 'Metafield: custom.max_load [single_line_text_field]':
-                  techItem?.max_load,
+                  techItem?.max_load ? techItem?.max_load : '',
                 'Metafield: custom.division [single_line_text_field]':
-                  techItem?.division,
+                  techItem?.division ? techItem?.division : '',
                 'Metafield: custom.display_model_no [single_line_text_field]':
-                  techItem?.display_model_no,
+                  techItem?.display_model_no ? techItem?.display_model_no : '',
                 'Metafield: custom.tread_depth [single_line_text_field]':
-                  techItem?.tread_depth,
+                  techItem?.tread_depth ? techItem?.tread_depth : '',
                 'Metafield: custom.max_pressure [single_line_text_field]':
-                  techItem?.max_pressure,
+                  techItem?.max_pressure ? techItem?.max_pressure : '',
                 // VariantImage: techItem?.image_url,
                 // Option1Value: techItem?.tire_size,
                 // VariantBarcode: techItem?.upc,
@@ -537,9 +560,11 @@ const uploadTireFile = asyncHandler(async (req, res) => {
           }
 
           const newData = generateNewData(file1Data, file2Data)
-          const newDataJson = JSON.stringify(newData)
+          // const newDataJson = JSON.stringify(newData)
+          const parser = new Parser()
+          const csv = parser.parse(newData)
 
-          const newDataBuffer = Buffer.from(newDataJson)
+          const newDataBuffer = Buffer.from(csv)
           const newDataStream = new Readable()
           newDataStream.push(newDataBuffer)
           newDataStream.push(null)
@@ -636,9 +661,12 @@ const uploadAccessoriesFile = asyncHandler(async (req, res) => {
             return newData
           }
           const newData = generateNewData(file1Data, file2Data)
-          const newDataJson = JSON.stringify(newData)
+          // const newDataJson = JSON.stringify(newData)
 
-          const newDataBuffer = Buffer.from(newDataJson)
+          const parser = new Parser()
+          const csv = parser.parse(newData)
+
+          const newDataBuffer = Buffer.from(csv)
           const newDataStream = new Readable()
           newDataStream.push(newDataBuffer)
           newDataStream.push(null)
@@ -830,9 +858,12 @@ const uploadWheelsFile = asyncHandler(async (req, res) => {
             return newData
           }
           const newData = generateNewData(file1Data, file2Data)
-          const newDataJson = JSON.stringify(newData)
+          // const newDataJson = JSON.stringify(newData)
 
-          const newDataBuffer = Buffer.from(newDataJson)
+          const parser = new Parser()
+          const csv = parser.parse(newData)
+
+          const newDataBuffer = Buffer.from(csv)
           const newDataStream = new Readable()
           newDataStream.push(newDataBuffer)
           newDataStream.push(null)
