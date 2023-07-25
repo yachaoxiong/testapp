@@ -153,6 +153,7 @@ const processFiles = asyncHandler(async (req, res) => {
 
     res.status(200).json({
       success: true,
+      outputPath: outputPath,
       message: 'Files processed and combined successfully',
     })
   } catch (err) {
@@ -235,6 +236,7 @@ const processAccessoriesFiles = asyncHandler(async (req, res) => {
 
     res.json({
       success: true,
+      outputPath: outputPath,
       message: 'Files processed and combined successfully',
     })
   } catch (err) {
@@ -414,6 +416,7 @@ const processWheelFiles = asyncHandler(async (req, res) => {
 
     res.json({
       success: true,
+      outputPath: outputPath,
       message: 'Files processed and combined successfully',
     })
   } catch (err) {
@@ -573,6 +576,7 @@ const uploadTireFile = asyncHandler(async (req, res) => {
 
           res.status(200).json({
             success: true,
+            outputPath: outputPath,
             message: 'Files processed and combined successfully',
           })
         } catch (err) {
@@ -674,6 +678,7 @@ const uploadAccessoriesFile = asyncHandler(async (req, res) => {
           await sftp.put(newDataStream, outputPath)
           res.status(200).json({
             success: true,
+            outputPath: outputPath,
             message: 'Files processed and combined successfully',
           })
         } catch (err) {
@@ -871,6 +876,7 @@ const uploadWheelsFile = asyncHandler(async (req, res) => {
           await sftp.put(newDataStream, outputPath)
           res.status(200).json({
             success: true,
+            outputPath: outputPath,
             message: 'Files processed and combined successfully',
           })
         } catch (err) {
@@ -886,6 +892,47 @@ const uploadWheelsFile = asyncHandler(async (req, res) => {
     }
   })
 })
+
+const getAllOutputFilesName = asyncHandler(async (req, res) => {
+  const config = {
+    host: process.env.AMAZON_HOST,
+    port: '22',
+    username: process.env.AMAZON_USERNAME,
+    password: process.env.AMAZON_PASSWORD,
+  }
+
+  const sftp = new SFTPClient()
+  const remotePath = '/home/sftpuser/uploads/'
+
+  try {
+    await sftp.connect(config)
+    //get all file names and sort them by date
+    const files = await sftp.list(remotePath)
+    files.sort((a, b) => b.modifyTime - a.modifyTime)
+
+    const outputList = files.map((file) => {
+      return {
+        name: file.name,
+        modifyTime: file.modifyTime,
+      }
+    })
+
+    res.status(200).json({
+      success: true,
+      outputList: outputList,
+    })
+  } catch (err) {
+    console.error(err)
+
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while processing the files',
+    })
+  } finally {
+    sftp.end()
+  }
+})
+
 export default {
   processFiles,
   processAccessoriesFiles,
@@ -893,4 +940,5 @@ export default {
   uploadTireFile,
   uploadAccessoriesFile,
   uploadWheelsFile,
+  getAllOutputFilesName,
 }
