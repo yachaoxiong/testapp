@@ -8,15 +8,9 @@ router.get('/processWheels', uploadController.processWheelFiles)
 
 router.post('/upload', uploadController.uploadTireFile)
 
-router.post(
-  '/uploadAccessories',
+router.post('/uploadAccessories', uploadController.uploadAccessoriesFile)
 
-  uploadController.uploadAccessoriesFile
-)
+router.post('/uploadWheels', uploadController.uploadWheelsFile)
+router.get('/getOutputList', uploadController.getAllOutputFilesName)
 
-router.post(
-  '/uploadWheels',
-
-  uploadController.uploadWheelsFile
-)
 export default router

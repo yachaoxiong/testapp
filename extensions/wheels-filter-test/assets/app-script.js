@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function () {
-  const data = await fetch('https://green-cherry-1492.fly.dev/api/v2/makes')
+  const data = await fetch(
+    'https://marco-christina-sierra-console.trycloudflare.com/api/v2/makes'
+  )
   const makes = await data.json()
   const makeOptionsDiv = document.getElementById('makeOptions')
 
@@ -116,7 +118,7 @@ function resetTires() {
 async function fetchYearData(make, model) {
   try {
     const response = await fetch(
-      `https://green-cherry-1492.fly.dev/api/v2/getYears/${make}/${model}`
+      `https://marco-christina-sierra-console.trycloudflare.com/api/v2/getYears/${make}/${model}`
     )
     const yearData = await response.json()
 
@@ -145,7 +147,7 @@ async function fetchYearData(make, model) {
 async function fetchModelData(make) {
   try {
     const response = await fetch(
-      `https://green-cherry-1492.fly.dev/api/v2/getModels/${make}`
+      `https://marco-christina-sierra-console.trycloudflare.com/api/v2/getModels/${make}`
     )
     const modelData = await response.json()
 
@@ -174,7 +176,7 @@ async function fetchModelData(make) {
 async function fetchModificationData(make, model, year) {
   try {
     const response = await fetch(
-      `https://green-cherry-1492.fly.dev/api/v2/getModifications/${make}/${model}/${year}`
+      `https://marco-christina-sierra-console.trycloudflare.com/api/v2/getModifications/${make}/${model}/${year}`
     )
     const modificationData = await response.json()
 
@@ -220,7 +222,7 @@ Trim level: ${modification?.trim_levels.join(', ')}</span>`
 async function fetchTireData(make, model, year, modification) {
   try {
     const response = await fetch(
-      `https://green-cherry-1492.fly.dev/api/v2/searchByModels/${make}/${year}/${model}/${modification}`
+      `https://marco-christina-sierra-console.trycloudflare.com/api/v2/searchByModels/${make}/${year}/${model}/${modification}`
     )
     const tireData = await response.json()
     const selectedModificationOption = document.getElementById(

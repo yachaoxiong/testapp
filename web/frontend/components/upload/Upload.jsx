@@ -3,12 +3,15 @@ import styles from './style/Upload.module.css'
 import TabBtn from './TabBtn'
 import { useAuthenticatedFetch } from '../../hooks'
 import AppProgressBar from '../ui/AppProgressBar'
+import OutputBar from '../ui/OutputBar'
+import OutputList from './OutputList'
 
 export default function Upload() {
   const [isLoading, setIsLoading] = useState(false)
   const [forceComplete, setForceComplete] = useState(false)
   const [message, setMessage] = useState('')
   const [warning, setWarning] = useState('')
+  const [outputPath, setOutputPath] = useState('')
   const [techDataFile, setTechDataFile] = useState(null)
   const [techDataFileName, setTechDataFileName] = useState('')
   const [invDataFile, setInvDataFile] = useState(null)
@@ -122,6 +125,8 @@ export default function Upload() {
         const data = await response.json()
         if (data.success) {
           setMessage('File uploaded successfully')
+          console.log('data', data)
+          setOutputPath(data.outputPath)
         } else {
           setWarning('File upload failed: ' + data.message)
         }
@@ -159,6 +164,7 @@ export default function Upload() {
       .then((res) => res.json())
       .then((data) => {
         if (data?.success) {
+          setOutputPath(data.outputPath)
           setMessage(data.message)
         } else {
           setWarning('An error occurred while processing the files')
@@ -192,7 +198,11 @@ export default function Upload() {
           className={`${styles.mainContent} animate__animated animate__pulse`}
         >
           <div className={styles.tabContainer}>
-            <TabBtn tabValue={tabValue} setTabValue={setTabValue} />
+            <TabBtn
+              tabValue={tabValue}
+              setTabValue={setTabValue}
+              clearOutputPath={() => setOutputPath('')}
+            />
             {message && <div className={styles.successInfo}>{message}</div>}
 
             {tabValue === 'task' ? (
@@ -222,11 +232,19 @@ export default function Upload() {
                     <i className="fal fa-tire"></i> Process Wheel
                   </button>
                 </div>
+                {outputPath && (
+                  <OutputBar
+                    outputPath={outputPath}
+                    setShowOutputBar={() => setOutputPath('')}
+                  />
+                )}
                 <h4 className={styles.taskButtonText}>
                   <i className="fas fa-info-circle"></i>Click Button to Start
                   the task
                 </h4>
               </div>
+            ) : tabValue === 'outputList' ? (
+              <OutputList />
             ) : (
               <div className={styles.tabContent}>
                 <form
@@ -251,6 +269,9 @@ export default function Upload() {
                         name="techData"
                         id="techData"
                         accept=".csv, application/JSON"
+                        onChange={(e) =>
+                          handleFiles(e, setInvDataFile, setInvDataFileName)
+                        }
                       />
                       <i
                         className={`${styles.uploadIcon} fas fa-file-upload`}
@@ -290,6 +311,13 @@ export default function Upload() {
                   {warning && (
                     <div className={styles.warningInfo}>{warning}</div>
                   )}
+                  {outputPath && (
+                    <OutputBar
+                      outputPath={outputPath}
+                      setShowOutputBar={() => setOutputPath('')}
+                    />
+                  )}
+
                   <div className="upload-btn-container">
                     <button type="submit" id="submit-button">
                       <i className="fas fa-upload"></i> Upload
