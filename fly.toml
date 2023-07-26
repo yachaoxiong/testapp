@@ -1,0 +1,22 @@
+# fly.toml app configuration file generated for just-wheel-deploy on 2023-07-18T18:28:10-06:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "just-wheel-deploy"
+primary_region = "sea"
+
+[env]
+  HOST = "https://just-wheel-deploy.fly.dev"
+  PORT = "8081"
+  SCOPES = "write_products"
+  SHOPIFY_API_KEY = "90cbfe396901c5c0cf684e37a5279c4c"
+  BASE_URL = "https://api.wheel-size.com/v2"
+
+[http_service]
+  internal_port = 8081
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
