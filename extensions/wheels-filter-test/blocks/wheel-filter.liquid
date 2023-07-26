@@ -1,4 +1,4 @@
-{{'app-style.css' | asset_url | stylesheet_tag}}
+{{ 'app-style.css' | asset_url | stylesheet_tag }}
 
 {% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> {% endcomment %}
 <div class="hero">
@@ -51,8 +51,7 @@
   <a href="https://ecommercecanada.com/">ecommercecanada Eric</a>
 </p>
 
-{{'app-script.js' | asset_url | script_tag}}
-
+<script src="{{ 'app-script.js' | asset_url }}" defer></script>
 
 
 {% schema %}
