@@ -1,9 +1,7 @@
-const appUrl = 'https://wheels-filter-test.herokuapp.com'
+const appUrl = 'https://florists-honduras-excel-unlike.trycloudflare.com'
 
 document.addEventListener('DOMContentLoaded', async function () {
-  const data = await fetch(
-    `${appUrl}/api/v2/makes`
-  )
+  const data = await fetch(`${appUrl}/api/v2/makes`)
   const makes = await data.json()
   const makeOptionsDiv = document.getElementById('makeOptions')
 
@@ -119,9 +117,7 @@ function resetTires() {
 
 async function fetchYearData(make, model) {
   try {
-    const response = await fetch(
-      `${appUrl}/api/v2/getYears/${make}/${model}`
-    )
+    const response = await fetch(`${appUrl}/api/v2/getYears/${make}/${model}`)
     const yearData = await response.json()
 
     // Reset the year selection
@@ -148,9 +144,7 @@ async function fetchYearData(make, model) {
 
 async function fetchModelData(make) {
   try {
-    const response = await fetch(
-      `${appUrl}/api/v2/getModels/${make}`
-    )
+    const response = await fetch(`${appUrl}/api/v2/getModels/${make}`)
     const modelData = await response.json()
 
     // Reset the model selection
@@ -199,8 +193,9 @@ async function fetchModificationData(make, model, year) {
 
       // Format the modification option text
       const modificationText = `${modification?.name}
-<span style="font-size: 0.8em;font-weight:600; color:gray;">Engine: ${modification?.engine.type
-        }, ${modification?.power?.hp ? modification?.power?.hp + 'HP' : ''} 
+<span style="font-size: 0.8em;font-weight:600; color:gray;">Engine: ${
+        modification?.engine.type
+      }, ${modification?.power?.hp ? modification?.power?.hp + 'HP' : ''} 
 Trim level: ${modification?.trim_levels.join(', ')}</span>`
       modificationOption.innerHTML = modificationText.replace(/\n/g, '<br>')
 
