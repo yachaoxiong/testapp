@@ -65,7 +65,7 @@ body {
 }
 
 /* Search Container styles */
-.search-container {
+.jw-search-container {
   padding: 90px;
   display: flex;
   gap: 20px;
@@ -76,7 +76,7 @@ body {
   z-index: 1;
 }
 
-.search-container select {
+.jw-search-container select {
   padding: 18px 32px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -316,7 +316,7 @@ body {
 
 /* media query medium screen*/
 @media (max-width: 1024px) {
-  .search-container {
+  .jw-search-container {
     padding: 60px;
     flex-wrap: wrap;
     justify-content: center;
