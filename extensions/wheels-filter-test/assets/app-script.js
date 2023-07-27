@@ -1,6 +1,8 @@
+const appUrl = 'https://wheels-filter-test.herokuapp.com'
+
 document.addEventListener('DOMContentLoaded', async function () {
   const data = await fetch(
-    'https://marco-christina-sierra-console.trycloudflare.com/api/v2/makes'
+    `${appUrl}/api/v2/makes`
   )
   const makes = await data.json()
   const makeOptionsDiv = document.getElementById('makeOptions')
@@ -118,7 +120,7 @@ function resetTires() {
 async function fetchYearData(make, model) {
   try {
     const response = await fetch(
-      `https://marco-christina-sierra-console.trycloudflare.com/api/v2/getYears/${make}/${model}`
+      `${appUrl}/api/v2/getYears/${make}/${model}`
     )
     const yearData = await response.json()
 
@@ -147,7 +149,7 @@ async function fetchYearData(make, model) {
 async function fetchModelData(make) {
   try {
     const response = await fetch(
-      `https://marco-christina-sierra-console.trycloudflare.com/api/v2/getModels/${make}`
+      `${appUrl}/api/v2/getModels/${make}`
     )
     const modelData = await response.json()
 
@@ -176,7 +178,7 @@ async function fetchModelData(make) {
 async function fetchModificationData(make, model, year) {
   try {
     const response = await fetch(
-      `https://marco-christina-sierra-console.trycloudflare.com/api/v2/getModifications/${make}/${model}/${year}`
+      `${appUrl}/api/v2/getModifications/${make}/${model}/${year}`
     )
     const modificationData = await response.json()
 
@@ -197,9 +199,8 @@ async function fetchModificationData(make, model, year) {
 
       // Format the modification option text
       const modificationText = `${modification?.name}
-<span style="font-size: 0.8em;font-weight:600; color:gray;">Engine: ${
-        modification?.engine.type
-      }, ${modification?.power?.hp ? modification?.power?.hp + 'HP' : ''} 
+<span style="font-size: 0.8em;font-weight:600; color:gray;">Engine: ${modification?.engine.type
+        }, ${modification?.power?.hp ? modification?.power?.hp + 'HP' : ''} 
 Trim level: ${modification?.trim_levels.join(', ')}</span>`
       modificationOption.innerHTML = modificationText.replace(/\n/g, '<br>')
 
@@ -222,7 +223,7 @@ Trim level: ${modification?.trim_levels.join(', ')}</span>`
 async function fetchTireData(make, model, year, modification) {
   try {
     const response = await fetch(
-      `https://marco-christina-sierra-console.trycloudflare.com/api/v2/searchByModels/${make}/${year}/${model}/${modification}`
+      `${appUrl}/api/v2/searchByModels/${make}/${year}/${model}/${modification}`
     )
     const tireData = await response.json()
     const selectedModificationOption = document.getElementById(
